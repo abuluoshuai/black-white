@@ -6,10 +6,11 @@ from matplotlib import pyplot as plt
 step = 0
 color = {1:[0,0,0],2:[255,255,255]}
 
-def check(playground, point):
-    available = False
-    x,y = point
-    # hengxiang
+def get_possible_location(playground):
+    res = []
+    for i in range(8):
+        for j in range(8):
+            
     
 def show(playground):
     _ = [[100,100,100],[80,100,120]] * 4
