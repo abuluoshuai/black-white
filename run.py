@@ -12,12 +12,12 @@ def line_change(playground, x, y, player):
         for i in range(1,y):
             if i == 1:
                 if playground[x][y-1] == player * -1:
-                    temp[x][y-1] == player
+                    temp[x][y-1] = player
                 else:
                     break
             else:
                 if playground[x][y-i] == player * -1:
-                    temp[x][y-i] == player
+                    temp[x][y-i] = player
                 elif playground[x][y-i] == player:
                     playground = temp
                 else:
@@ -29,13 +29,50 @@ def line_change(playground, x, y, player):
         for i in range(1,playground.shape[1] - y + 1):
             if i == 1:
                 if playground[x][y+1] == player * -1:
-                    temp[x][y+1] == player
+                    temp[x][y+1] = player
                 else:
                     break
             else:
                 if playground[x][y+i] == player * -1:
-                    temp[x][y+i] == player
+                    temp[x][y+i] = player
                 elif playground[x][y+i] == player:
+                    playground = temp
+                else:
+                    break
+    return playground
+
+def row_change(playground, x, y, player):
+    temp = copy.deepcopy(playground)
+    # 向左
+    if x >= 2:
+        temp[x][y] = player
+        for i in range(1,x):
+            if i == 1:
+                if playground[x-1][y] == player * -1:
+                    temp[x-1][y] = player
+                else:
+                    break
+            else:
+                if playground[x-i][y] == player * -1:
+                    temp[x-i][y] = player
+                elif playground[x-i][y] == player:
+                    playground = temp
+                else:
+                    break
+    temp = copy.deepcopy(playground)
+    # 向右
+    if x <= playground.shape[0] - 3:
+        temp[x][y] = player
+        for i in range(1,playground.shape[0] - x + 1):
+            if i == 1:
+                if playground[x+1][y] == player * -1:
+                    temp[x+1][y] = player
+                else:
+                    break
+            else:
+                if playground[x+i][y] == player * -1:
+                    temp[x+i][y] = player
+                elif playground[x+i][y] == player:
                     playground = temp
                 else:
                     break
