@@ -205,8 +205,7 @@ class PlayGround:
         if not self.get_possible_location():
             self.status = False
             print(self.player)
-            print(self.playground.sum())
-            print(self.playground)
+            self.result()
     def play(self, location):
         if self.check(location):
             self.playground = self.line_change(self.playground, location)
@@ -217,6 +216,15 @@ class PlayGround:
             self.get_status()
             return True
         return False
+    def result(self):
+        if not self.status:
+            s = self.playground.sum()
+            if s > 0:
+                print(u"黑胜！")
+            elif s < 0:
+                print(u"白胜！")
+            else:
+                print(u"平局！")
 
 def on_press(event):
     global pg
@@ -236,7 +244,7 @@ if __name__ == "__main__":
             ax.imshow(pg.img())
             plt.axis()
             plt.show()
-        if sys.argv[1] == "random":
+        elif sys.argv[1] == "random":
             while pg.status:
                 possible_locations = pg.get_possible_location()
                 step = random.choice(possible_locations)
