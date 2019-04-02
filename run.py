@@ -204,8 +204,8 @@ class PlayGround:
     def get_status(self):
         if not self.get_possible_location():
             self.status = False
-            print(self.player)
-            self.result()
+            #print(self.player)
+            # _ = self.result()
     def play(self, location):
         if self.check(location):
             self.playground = self.line_change(self.playground, location)
@@ -221,10 +221,13 @@ class PlayGround:
             s = self.playground.sum()
             if s > 0:
                 print(u"黑胜！")
+                return 1
             elif s < 0:
                 print(u"白胜！")
+                return -1
             else:
                 print(u"平局！")
+                return 0
 
 def random_play(pg):
     possible_locations = pg.get_possible_location()
@@ -248,7 +251,7 @@ def on_press(event):
 if __name__ == "__main__":
     pg = PlayGround()
     if len(sys.argv)>1:
-        # 2 people
+        # 2 man
         if sys.argv[1] == "2":
             man_player = [1,-1]
             fig = plt.figure()
@@ -262,7 +265,7 @@ if __name__ == "__main__":
             while pg.status:
                 random_play(pg)
             pg.show()
-        # black is people, white is random
+        # black is man, white is random
         elif sys.argv[1] == "1":
             man_player = [1]
             fig = plt.figure()
@@ -271,7 +274,7 @@ if __name__ == "__main__":
             ax.imshow(pg.img())
             plt.axis()
             plt.show()
-        # black is random, white is people
+        # black is random, white is man
         elif sys.argv[1] == "-1":
             man_player = [-1]
             fig = plt.figure()
@@ -281,3 +284,18 @@ if __name__ == "__main__":
             ax.imshow(pg.img())
             plt.axis()
             plt.show()
+        elif sys.argv[1] == "test":
+            import time
+            res = []
+            start_time = time.time()
+            for i in range(100000):
+                pg = PlayGround()
+                while pg.status:
+                    random_play(pg)
+                res.append(pg.playground.sum())
+            end_time = time.time()
+            black_win = sum([1 for i in res if i > 0])
+            white_win = sum([1 for i in res if i < 0])
+            ping = sum([1 for i in res if i == 0])
+            print("B:%d\nW:%d\nP:%d"%(black_win, white_win, ping))
+            print("Time spend:%d"%(end_time - start_time))
