@@ -207,14 +207,6 @@ class PlayGround:
             print(self.player)
             print(self.playground.sum())
             print(self.playground)
-    def random(self):
-        possible_locations = self.get_possible_location()
-        step = random.choice(possible_locations)
-        self.play(step)
-        print(self.step,step)
-    def random_play(self):
-        while self.status:
-            self.random()
     def play(self, location):
         if self.check(location):
             self.playground = self.line_change(self.playground, location)
@@ -245,5 +237,8 @@ if __name__ == "__main__":
             plt.axis()
             plt.show()
         if sys.argv[1] == "random":
-            pg.random_play()
+            while pg.status:
+                possible_locations = pg.get_possible_location()
+                step = random.choice(possible_locations)
+                pg.play(step)
             pg.show()
