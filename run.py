@@ -226,6 +226,11 @@ class PlayGround:
             else:
                 print(u"平局！")
 
+def random_play(pg):
+    possible_locations = pg.get_possible_location()
+    step = random.choice(possible_locations)
+    pg.play(step)
+
 def on_press(event):
     global pg,man_player
     if event.button==1:
@@ -236,9 +241,7 @@ def on_press(event):
             fig.canvas.draw()
         else:
             pg.play(location)
-            possible_locations = pg.get_possible_location()
-            step = random.choice(possible_locations)
-            pg.play(step)
+            random_play(pg)
             ax.imshow(pg.img())
             fig.canvas.draw()
 
@@ -257,9 +260,7 @@ if __name__ == "__main__":
         # 2 random play
         elif sys.argv[1] == "random":
             while pg.status:
-                possible_locations = pg.get_possible_location()
-                step = random.choice(possible_locations)
-                pg.play(step)
+                random_play(pg)
             pg.show()
         # black is people, white is random
         elif sys.argv[1] == "1":
@@ -276,9 +277,7 @@ if __name__ == "__main__":
             fig = plt.figure()
             fig.canvas.mpl_connect("button_press_event", on_press)
             ax = fig.add_subplot(111)
-            possible_locations = pg.get_possible_location()
-            step = random.choice(possible_locations)
-            pg.play(step)
+            random_play(pg)
             ax.imshow(pg.img())
             plt.axis()
             plt.show()
