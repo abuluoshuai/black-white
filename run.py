@@ -269,10 +269,10 @@ def on_press(event):
             ax.imshow(pg.img())
             fig.canvas.draw()
         else:
-            pg.play(location)
-            random_play(pg)
-            ax.imshow(pg.img())
-            fig.canvas.draw()
+            if pg.play(location):
+                random_play(pg)
+                ax.imshow(pg.img())
+                fig.canvas.draw()
 
 if __name__ == "__main__":
     pg = PlayGround()
