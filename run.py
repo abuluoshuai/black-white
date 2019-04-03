@@ -4,15 +4,18 @@ import sys
 import copy
 import random
 import numpy as np
+from PIL import Image,ImageDraw
 from matplotlib import pyplot as plt
- 
+
 class PlayGround:
-    def __init__(self):
+    def __init__(self, edge = 50, color1 = (255,153,18), color2 = (118,128,105)):
         # player = 1 or -1
         self.player = 1
+        self.edge = edge
+        self.color1 = color1
+        self.color2 = color2
         self.step = 0
         self.status = True
-        self.color = {1:[0,0,0],-1:[255,255,255]}
         self.playground = np.array([
             [0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0],
@@ -23,15 +26,34 @@ class PlayGround:
             [0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0],
         ])
-    def img(self):
-        _ = [[0,255,255],[0,128,0]] * 4
-        __ = [[0,128,0],[0,255,255]] * 4
-        background = np.array((_ + __)*4).reshape((8,8,3))
+        self.pg_img = self.basicImg()
+    def basicImg(self):
+        e = Image.new('RGB',(self.edge * 8,self.edge * 8),(255,255,255))
+        c1 = Image.new('RGB',(self.edge,self.edge),self.color1)
+        c2 = Image.new('RGB',(self.edge,self.edge),self.color2)
         for i in range(8):
             for j in range(8):
-                if self.playground[i][j] != 0:
-                    background[i][j] = self.color[self.playground[i][j]]
-        return background
+                if i % 2 == 0:
+                    if j % 2 == 0:
+                        e.paste(c1, (i*self.edge, j*self.edge, i*self.edge+self.edge,j*self.edge+self.edge))
+                    else:
+                        e.paste(c2, (i*self.edge, j*self.edge, i*self.edge+self.edge,j*self.edge+self.edge))
+                else:
+                    if j % 2 == 0:
+                        e.paste(c2, (i*self.edge, j*self.edge, i*self.edge+self.edge,j*self.edge+self.edge))
+                    else:
+                        e.paste(c1, (i*self.edge, j*self.edge, i*self.edge+self.edge,j*self.edge+self.edge))
+        return e
+    def img(self):
+        im = self.pg_img.copy()
+        draw = ImageDraw.Draw(im)
+        for i in range(8):
+            for j in range(8):
+                if self.playground[i][j] == 1:
+                    draw.ellipse(((i+0.1)*self.edge,(j+0.1)*self.edge,(i-0.1)*self.edge+self.edge,(j-0.1)*self.edge+self.edge),fill = "black")
+                elif self.playground[i][j] == -1:
+                    draw.ellipse(((i+0.1)*self.edge,(j+0.1)*self.edge,(i-0.1)*self.edge+self.edge,(j-0.1)*self.edge+self.edge),fill = "white")
+        return im
     def show(self):
         background = self.img()
         plt.imshow(background)
@@ -236,8 +258,9 @@ def random_play(pg):
 
 def on_press(event):
     global pg,man_player
+    # print(round(float(event.ydata)), round(float(event.xdata)))
     if event.button==1:
-        location = [round(float(event.ydata)), round(float(event.xdata))]
+        location = [int(float(event.xdata)/50), int(float(event.ydata)/50)]
         if len(man_player) == 2:
             pg.play(location)
             ax.imshow(pg.img())
