@@ -68,7 +68,7 @@ class PlayGround:
         temp = copy.deepcopy(playground)
         if y >= 2:
             temp[x][y] = self.player
-            for i in range(1,y):
+            for i in range(1,y+1):
                 if i == 1:
                     if playground[x][y-1] == self.player * -1:
                         temp[x][y-1] = self.player
@@ -105,7 +105,7 @@ class PlayGround:
         temp = copy.deepcopy(playground)
         if x >= 2:
             temp[x][y] = self.player
-            for i in range(1,x):
+            for i in range(1,x+1):
                 if i == 1:
                     if playground[x-1][y] == self.player * -1:
                         temp[x-1][y] = self.player
@@ -142,7 +142,7 @@ class PlayGround:
         temp = copy.deepcopy(playground)
         if x >= 2 and y >= 2:
             temp[x][y] = self.player
-            for i in range(1,min(x,y)):
+            for i in range(1,min(x+1,y+1)):
                 if i == 1:
                     if playground[x-1][y-1] == self.player * -1:
                         temp[x-1][y-1] = self.player
@@ -176,7 +176,7 @@ class PlayGround:
         temp = copy.deepcopy(playground)
         if x >= 2 and y <= playground.shape[1] - 3:
             temp[x][y] = self.player
-            for i in range(1,min(x,playground.shape[1] - y)):
+            for i in range(1,min(x+1,playground.shape[1] - y)):
                 if i == 1:
                     if playground[x-1][y+1] == self.player * -1:
                         temp[x-1][y+1] = self.player
@@ -193,7 +193,7 @@ class PlayGround:
         temp = copy.deepcopy(playground)
         if x <= playground.shape[0] - 3 and y >= 2:
             temp[x][y] = self.player
-            for i in range(1,min(playground.shape[0] - x, y)):
+            for i in range(1,min(playground.shape[0] - x, y+1)):
                 if i == 1:
                     if playground[x+1][y-1] == self.player * -1:
                         temp[x+1][y-1] = self.player
