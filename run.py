@@ -8,12 +8,13 @@ from PIL import Image,ImageDraw
 from matplotlib import pyplot as plt
 
 class PlayGround:
-    def __init__(self, edge = 50, color1 = (255,153,18), color2 = (118,128,105)):
+    def __init__(self, edge = 50, color1 = (255,153,18), color2 = (118,128,105), color3 = (255,0,0)):
         # player = 1 or -1
         self.player = 1
         self.edge = edge
         self.color1 = color1
         self.color2 = color2
+        self.color3 = color3
         self.step = 0
         self.status = True
         self.playground = np.array([
@@ -53,6 +54,8 @@ class PlayGround:
                     draw.ellipse(((i+0.1)*self.edge,(j+0.1)*self.edge,(i-0.1)*self.edge+self.edge,(j-0.1)*self.edge+self.edge),fill = "black")
                 elif self.playground[i][j] == -1:
                     draw.ellipse(((i+0.1)*self.edge,(j+0.1)*self.edge,(i-0.1)*self.edge+self.edge,(j-0.1)*self.edge+self.edge),fill = "white")
+                elif self.check((i,j)):
+                    draw.ellipse(((i+0.1)*self.edge,(j+0.1)*self.edge,(i-0.1)*self.edge+self.edge,(j-0.1)*self.edge+self.edge),fill = self.color3)
         return im
     def show(self):
         background = self.img()
