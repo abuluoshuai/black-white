@@ -174,7 +174,7 @@ class PlayGround:
                         break
         # 右上
         temp = copy.deepcopy(playground)
-        if x >= 2 and y >= 2 and y <= 6:
+        if x >= 2 and y <= playground.shape[1] - 3:
             temp[x][y] = self.player
             for i in range(1,min(x,playground.shape[1] - y)):
                 if i == 1:
@@ -191,7 +191,7 @@ class PlayGround:
                         break
         # 左下
         temp = copy.deepcopy(playground)
-        if x <= playground.shape[0] - 3 and y <= playground.shape[1] - 3:
+        if x <= playground.shape[0] - 3 and y >= 2:
             temp[x][y] = self.player
             for i in range(1,min(playground.shape[0] - x, y)):
                 if i == 1:
