@@ -44,7 +44,9 @@ if __name__ == "__main__":
         elif sys.argv[1] == "random":
             while pg.status:
                 random_play(pg)
-            pg.show()
+            # pg.show()
+            plt.imshow(pg.img())
+            plt.show()
         # black is man, white is random
         elif sys.argv[1] == "1":
             man_player = [1]

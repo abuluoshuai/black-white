@@ -8,7 +8,7 @@ from PIL import Image,ImageDraw
 import matplotlib.pyplot as plt
 
 class PlayGround:
-    def __init__(self, edge = 50, color1 = (255,153,18), color2 = (118,128,105), color3 = (255,0,0)):
+    def __init__(self, edge = 50, color1 = "#DEB887", color2 = "#F5DEB3", color3 = "#7FFFD4"):
         # player = 1 or -1
         self.player = 1
         self.edge = edge
@@ -57,11 +57,6 @@ class PlayGround:
                 elif self.check((i,j)):
                     draw.ellipse(((i+0.1)*self.edge,(j+0.1)*self.edge,(i-0.1)*self.edge+self.edge,(j-0.1)*self.edge+self.edge),fill = self.color3)
         return im
-    def show(self):
-        background = self.img()
-        plt.imshow(background)
-        plt.axis()
-        plt.show()
     def line_change(self, playground, location):
         x,y = location
         # 向左
